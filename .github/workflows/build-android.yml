@@ -57,12 +57,30 @@ jobs:
       - name: Build Debug APK
         run: |
           cd android
-          ./gradlew assembleDebug --stacktrace --no-daemon
+          echo "Retrying debug build up to 3 times if JitPack 500 occurs";
+          for i in 1 2 3; do
+            echo "Attempt $i";
+            if ./gradlew assembleDebug --stacktrace --no-daemon; then
+              echo "Debug build succeeded on attempt $i"; break; else
+              echo "Debug build failed on attempt $i";
+              if [ $i -lt 3 ]; then echo "Waiting 20s before retry"; sleep 20; fi;
+            fi;
+          done
+          ls -al app/build/outputs/apk/debug || true
 
       - name: Build Release APK
         run: |
           cd android
-          ./gradlew assembleRelease --stacktrace --no-daemon
+          echo "Retrying release build up to 3 times if JitPack 500 occurs";
+          for i in 1 2 3; do
+            echo "Attempt $i";
+            if ./gradlew assembleRelease --stacktrace --no-daemon; then
+              echo "Release build succeeded on attempt $i"; break; else
+              echo "Release build failed on attempt $i";
+              if [ $i -lt 3 ]; then echo "Waiting 20s before retry"; sleep 20; fi;
+            fi;
+          done
+          ls -al app/build/outputs/apk/release || true
 
       - name: Upload Debug APK
         uses: actions/upload-artifact@v4

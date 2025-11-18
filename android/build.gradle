@@ -11,6 +11,7 @@ buildscript {
     repositories {
         google()
         mavenCentral()
+        maven { url 'https://jitpack.io' }
     }
     dependencies {
         classpath("com.android.tools.build:gradle:8.1.1")
@@ -27,6 +28,8 @@ allprojects {
         maven {
             url("$rootDir/../node_modules/jsc-android/dist")
         }
+        // Needed for dependencies resolved via JitPack (e.g., Android-ScalableVideoView used by react-native-video)
+        maven { url 'https://jitpack.io' }
         google()
         mavenCentral()
     }
