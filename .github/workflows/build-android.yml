@@ -35,6 +35,12 @@ jobs:
         with:
           gradle-version: 8.3
 
+      - name: Confirm Android SDK Build Tools
+        run: |
+          echo "Listing installed build-tools";
+          ls -1 $ANDROID_HOME/build-tools || true
+          echo "(We use buildToolsVersion 33.0.1)"
+
       - name: Make gradlew executable
         run: chmod +x android/gradlew
 
@@ -57,7 +63,7 @@ jobs:
       - name: Build Debug APK
         run: |
           cd android
-          echo "Retrying debug build up to 3 times if JitPack 500 occurs";
+          echo "Assembling debug APK (no JitPack) with retries";
           for i in 1 2 3; do
             echo "Attempt $i";
             if ./gradlew assembleDebug --stacktrace --no-daemon; then
@@ -72,7 +78,7 @@ jobs:
       - name: Build Release APK
         run: |
           cd android
-          echo "Retrying release build up to 3 times if JitPack 500 occurs";
+          echo "Assembling release APK (no JitPack) with retries";
           for i in 1 2 3; do
             echo "Attempt $i";
             if ./gradlew assembleRelease --stacktrace --no-daemon; then
@@ -92,6 +98,12 @@ jobs:
             android/app/build/outputs/apk/debug/*.apk
             android/app/build/outputs/**/debug/*.apk
           if-no-files-found: error
+
+      - name: List all build outputs
+        if: always()
+        run: |
+          echo "Tree of android/app/build/outputs:";
+          find android/app/build/outputs -maxdepth 5 -type f -print || true
 
       - name: Upload Release APK
         uses: actions/upload-artifact@v4

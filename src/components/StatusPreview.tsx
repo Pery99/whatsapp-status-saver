@@ -65,38 +65,77 @@ export const StatusPreview: React.FC<StatusPreviewProps> = ({
     <Modal visible={visible} animationType="fade" onRequestClose={onClose}>
       <StatusBar hidden />
       <View style={styles.container}>
-        <View style={[styles.mediaContainer, { backgroundColor: colors.background }]}>
+        <View
+          style={[
+            styles.mediaContainer,
+            { backgroundColor: colors.background },
+          ]}
+        >
           {status.type === "image" ? (
-            <Image source={{ uri: status.uri }} style={styles.media} resizeMode="contain" />
+            <Image
+              source={{ uri: status.uri }}
+              style={styles.media}
+              resizeMode="contain"
+            />
           ) : (
             <View style={styles.placeholderVideo}>
-              <Text style={styles.placeholderText}>Video playback temporarily disabled</Text>
+              <Text style={styles.placeholderText}>
+                Video playback temporarily disabled
+              </Text>
             </View>
           )}
         </View>
 
         <View style={[styles.metadata, { backgroundColor: colors.overlay }]}>
-          <Text style={styles.metadataText}>📏 {formatFileSize(status.size)}</Text>
-          <Text style={styles.metadataText}>📅 {formatDate(status.timestamp)}</Text>
+          <Text style={styles.metadataText}>
+            📏 {formatFileSize(status.size)}
+          </Text>
+          <Text style={styles.metadataText}>
+            📅 {formatDate(status.timestamp)}
+          </Text>
         </View>
 
         <View style={styles.header}>
-          <TouchableOpacity style={[styles.headerButton, { backgroundColor: colors.overlay }]} onPress={onClose}>
+          <TouchableOpacity
+            style={[styles.headerButton, { backgroundColor: colors.overlay }]}
+            onPress={onClose}
+          >
             <Text style={styles.headerButtonText}>✕</Text>
           </TouchableOpacity>
         </View>
 
         <View style={styles.footer}>
-          <TouchableOpacity style={[styles.footerButton, { backgroundColor: colors.overlay }]} onPress={handleShare}>
+          <TouchableOpacity
+            style={[styles.footerButton, { backgroundColor: colors.overlay }]}
+            onPress={handleShare}
+          >
             <Text style={styles.footerButtonText}>📤 Share</Text>
           </TouchableOpacity>
           {showDelete && onDelete ? (
-            <TouchableOpacity style={[styles.footerButton, { backgroundColor: colors.error }]} onPress={onDelete}>
-              <Text style={[styles.footerButtonText, styles.downloadButtonText]}>🗑️ Delete</Text>
+            <TouchableOpacity
+              style={[styles.footerButton, { backgroundColor: colors.error }]}
+              onPress={onDelete}
+            >
+              <Text
+                style={[styles.footerButtonText, styles.downloadButtonText]}
+              >
+                🗑️ Delete
+              </Text>
             </TouchableOpacity>
           ) : (
-            <TouchableOpacity style={[styles.footerButton, styles.downloadButton, { backgroundColor: colors.primary }]} onPress={onDownload}>
-              <Text style={[styles.footerButtonText, styles.downloadButtonText]}>⬇ Download</Text>
+            <TouchableOpacity
+              style={[
+                styles.footerButton,
+                styles.downloadButton,
+                { backgroundColor: colors.primary },
+              ]}
+              onPress={onDownload}
+            >
+              <Text
+                style={[styles.footerButtonText, styles.downloadButtonText]}
+              >
+                ⬇ Download
+              </Text>
             </TouchableOpacity>
           )}
         </View>
