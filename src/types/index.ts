@@ -2,7 +2,7 @@ export interface StatusFile {
   id: string;
   uri: string;
   name: string;
-  type: 'image' | 'video';
+  type: "image" | "video";
   size: number;
   timestamp: number;
 }

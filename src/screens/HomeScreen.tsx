@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useEffect, useCallback } from "react";
 import {
   View,
   StyleSheet,
@@ -8,15 +8,15 @@ import {
   Alert,
   StatusBar,
   Switch,
-} from 'react-native';
-import { useNavigation } from '@react-navigation/native';
-import { StatusFile } from '@/types';
-import { FileSystemService } from '@/services/FileSystemService';
-import { PermissionService } from '@/services/PermissionService';
-import { AutoSaveService } from '@/services/AutoSaveService';
-import { StatusGrid } from '@/components/StatusGrid';
-import { StatusPreview } from '@/components/StatusPreview';
-import { useTheme } from '@/context/ThemeContext';
+} from "react-native";
+import { useNavigation } from "@react-navigation/native";
+import { StatusFile } from "@/types";
+import { FileSystemService } from "@/services/FileSystemService";
+import { PermissionService } from "@/services/PermissionService";
+import { AutoSaveService } from "@/services/AutoSaveService";
+import { StatusGrid } from "@/components/StatusGrid";
+import { StatusPreview } from "@/components/StatusPreview";
+import { useTheme } from "@/context/ThemeContext";
 
 export const HomeScreen: React.FC = () => {
   const { colors, isDark, toggleTheme } = useTheme();
@@ -50,22 +50,22 @@ export const HomeScreen: React.FC = () => {
       } else {
         setLoading(false);
         Alert.alert(
-          'Permission Required',
-          'Storage permission is required to access WhatsApp statuses.',
+          "Permission Required",
+          "Storage permission is required to access WhatsApp statuses.",
           [
             {
-              text: 'Retry',
+              text: "Retry",
               onPress: initializeApp,
             },
             {
-              text: 'Cancel',
-              style: 'cancel',
+              text: "Cancel",
+              style: "cancel",
             },
           ]
         );
       }
     } catch (error) {
-      console.error('Error initializing app:', error);
+      console.error("Error initializing app:", error);
       setLoading(false);
     }
   };
@@ -79,11 +79,16 @@ export const HomeScreen: React.FC = () => {
       // Auto-save new statuses if enabled
       const savedCount = await AutoSaveService.checkAndAutoSave(files);
       if (savedCount > 0) {
-        Alert.alert('Auto-Save', `${savedCount} new status${savedCount > 1 ? 'es' : ''} saved automatically!`);
+        Alert.alert(
+          "Auto-Save",
+          `${savedCount} new status${
+            savedCount > 1 ? "es" : ""
+          } saved automatically!`
+        );
       }
     } catch (error) {
-      console.error('Error loading statuses:', error);
-      Alert.alert('Error', 'Failed to load statuses');
+      console.error("Error loading statuses:", error);
+      Alert.alert("Error", "Failed to load statuses");
     } finally {
       setLoading(false);
     }
@@ -122,29 +127,33 @@ export const HomeScreen: React.FC = () => {
         : statuses.filter((s) => selectedIds.has(s.id));
 
       if (statusesToDownload.length === 0) {
-        Alert.alert('No Selection', 'Please select statuses to download');
+        Alert.alert("No Selection", "Please select statuses to download");
         return;
       }
 
-      const results = await FileSystemService.downloadMultipleStatuses(statusesToDownload);
+      const results = await FileSystemService.downloadMultipleStatuses(
+        statusesToDownload
+      );
       const successCount = results.filter((r) => r.success).length;
 
       if (successCount === statusesToDownload.length) {
         Alert.alert(
-          'Success',
-          `${successCount} status${successCount > 1 ? 'es' : ''} downloaded successfully!`
+          "Success",
+          `${successCount} status${
+            successCount > 1 ? "es" : ""
+          } downloaded successfully!`
         );
         setSelectedIds(new Set());
         setPreviewStatus(null);
       } else {
         Alert.alert(
-          'Partial Success',
+          "Partial Success",
           `${successCount} of ${statusesToDownload.length} statuses downloaded`
         );
       }
     } catch (error) {
-      console.error('Error downloading:', error);
-      Alert.alert('Error', 'Failed to download statuses');
+      console.error("Error downloading:", error);
+      Alert.alert("Error", "Failed to download statuses");
     }
   };
 
@@ -157,17 +166,19 @@ export const HomeScreen: React.FC = () => {
     setAutoSaveEnabled(newValue);
     await AutoSaveService.setAutoSaveEnabled(newValue);
     Alert.alert(
-      'Auto-Save',
-      `Auto-save has been ${newValue ? 'enabled' : 'disabled'}. ${
-        newValue ? 'New statuses will be saved automatically.' : ''
+      "Auto-Save",
+      `Auto-save has been ${newValue ? "enabled" : "disabled"}. ${
+        newValue ? "New statuses will be saved automatically." : ""
       }`
     );
   };
 
   return (
-    <SafeAreaView style={[styles.container, { backgroundColor: colors.background }]}>
+    <SafeAreaView
+      style={[styles.container, { backgroundColor: colors.background }]}
+    >
       <StatusBar
-        barStyle={isDark ? 'light-content' : 'dark-content'}
+        barStyle={isDark ? "light-content" : "dark-content"}
         backgroundColor={colors.background}
       />
 
@@ -185,8 +196,8 @@ export const HomeScreen: React.FC = () => {
             </TouchableOpacity>
           ) : (
             <>
-              <TouchableOpacity 
-                onPress={() => navigation.navigate('Downloads' as never)}
+              <TouchableOpacity
+                onPress={() => navigation.navigate("Downloads" as never)}
                 style={styles.headerButton}
               >
                 <Text style={styles.downloadsIcon}>📥</Text>
@@ -201,9 +212,13 @@ export const HomeScreen: React.FC = () => {
 
       {/* Settings Panel */}
       {showSettings && (
-        <View style={[styles.settingsPanel, { backgroundColor: colors.surface }]}>
+        <View
+          style={[styles.settingsPanel, { backgroundColor: colors.surface }]}
+        >
           <View style={styles.settingRow}>
-            <Text style={[styles.settingLabel, { color: colors.text }]}>Dark Mode</Text>
+            <Text style={[styles.settingLabel, { color: colors.text }]}>
+              Dark Mode
+            </Text>
             <Switch
               value={isDark}
               onValueChange={toggleTheme}
@@ -212,7 +227,9 @@ export const HomeScreen: React.FC = () => {
             />
           </View>
           <View style={styles.settingRow}>
-            <Text style={[styles.settingLabel, { color: colors.text }]}>Auto-Save New Statuses</Text>
+            <Text style={[styles.settingLabel, { color: colors.text }]}>
+              Auto-Save New Statuses
+            </Text>
             <Switch
               value={autoSaveEnabled}
               onValueChange={toggleAutoSave}
@@ -245,7 +262,7 @@ export const HomeScreen: React.FC = () => {
             onPress={() => handleDownload()}
           >
             <Text style={styles.downloadButtonText}>
-              Download {selectedIds.size > 1 ? 'All' : ''}
+              Download {selectedIds.size > 1 ? "All" : ""}
             </Text>
           </TouchableOpacity>
         </View>
@@ -267,24 +284,24 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   header: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
     paddingHorizontal: 16,
     paddingVertical: 16,
     elevation: 2,
-    shadowColor: '#000',
+    shadowColor: "#000",
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.1,
     shadowRadius: 4,
   },
   headerTitle: {
     fontSize: 20,
-    fontWeight: 'bold',
+    fontWeight: "bold",
   },
   headerActions: {
-    flexDirection: 'row',
-    alignItems: 'center',
+    flexDirection: "row",
+    alignItems: "center",
     gap: 16,
   },
   headerButton: {
@@ -292,7 +309,7 @@ const styles = StyleSheet.create({
   },
   headerAction: {
     fontSize: 16,
-    fontWeight: '600',
+    fontWeight: "600",
   },
   settingsIcon: {
     fontSize: 24,
@@ -304,35 +321,35 @@ const styles = StyleSheet.create({
     paddingHorizontal: 16,
     paddingVertical: 12,
     elevation: 2,
-    shadowColor: '#000',
+    shadowColor: "#000",
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.1,
     shadowRadius: 4,
   },
   settingRow: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
     paddingVertical: 12,
   },
   settingLabel: {
     fontSize: 16,
   },
   bottomBar: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
     paddingHorizontal: 16,
     paddingVertical: 16,
     elevation: 8,
-    shadowColor: '#000',
+    shadowColor: "#000",
     shadowOffset: { width: 0, height: -2 },
     shadowOpacity: 0.1,
     shadowRadius: 4,
   },
   selectedCount: {
     fontSize: 16,
-    fontWeight: '600',
+    fontWeight: "600",
   },
   downloadButton: {
     paddingHorizontal: 24,
@@ -340,8 +357,8 @@ const styles = StyleSheet.create({
     borderRadius: 8,
   },
   downloadButtonText: {
-    color: '#FFFFFF',
+    color: "#FFFFFF",
     fontSize: 16,
-    fontWeight: 'bold',
+    fontWeight: "bold",
   },
 });

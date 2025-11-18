@@ -1,17 +1,17 @@
-import RNFS from 'react-native-fs';
-import { Platform } from 'react-native';
-import { StatusFile, DownloadResult } from '@/types';
+import RNFS from "react-native-fs";
+import { Platform } from "react-native";
+import { StatusFile, DownloadResult } from "@/types";
 
 export class FileSystemService {
-  private static readonly WHATSAPP_STATUS_PATH = 
-    Platform.OS === 'android' 
-      ? '/storage/emulated/0/Android/media/com.whatsapp/WhatsApp/Media/.Statuses'
-      : '';
+  private static readonly WHATSAPP_STATUS_PATH =
+    Platform.OS === "android"
+      ? "/storage/emulated/0/Android/media/com.whatsapp/WhatsApp/Media/.Statuses"
+      : "";
 
-  private static readonly WHATSAPP_BUSINESS_STATUS_PATH = 
-    Platform.OS === 'android' 
-      ? '/storage/emulated/0/Android/media/com.whatsapp.w4b/WhatsApp Business/Media/.Statuses'
-      : '';
+  private static readonly WHATSAPP_BUSINESS_STATUS_PATH =
+    Platform.OS === "android"
+      ? "/storage/emulated/0/Android/media/com.whatsapp.w4b/WhatsApp Business/Media/.Statuses"
+      : "";
 
   private static readonly DOWNLOAD_FOLDER = `${RNFS.DownloadDirectoryPath}/WhatsAppDownloader`;
 
@@ -23,10 +23,10 @@ export class FileSystemService {
       const exists = await RNFS.exists(this.DOWNLOAD_FOLDER);
       if (!exists) {
         await RNFS.mkdir(this.DOWNLOAD_FOLDER);
-        console.log('Download folder created:', this.DOWNLOAD_FOLDER);
+        console.log("Download folder created:", this.DOWNLOAD_FOLDER);
       }
     } catch (error) {
-      console.error('Error creating download folder:', error);
+      console.error("Error creating download folder:", error);
       throw error;
     }
   }
@@ -37,10 +37,12 @@ export class FileSystemService {
   static async checkWhatsAppStatusExists(): Promise<boolean> {
     try {
       const mainExists = await RNFS.exists(this.WHATSAPP_STATUS_PATH);
-      const businessExists = await RNFS.exists(this.WHATSAPP_BUSINESS_STATUS_PATH);
+      const businessExists = await RNFS.exists(
+        this.WHATSAPP_BUSINESS_STATUS_PATH
+      );
       return mainExists || businessExists;
     } catch (error) {
-      console.error('Error checking WhatsApp status folder:', error);
+      console.error("Error checking WhatsApp status folder:", error);
       return false;
     }
   }
@@ -55,21 +57,27 @@ export class FileSystemService {
       // Scan main WhatsApp
       const mainExists = await RNFS.exists(this.WHATSAPP_STATUS_PATH);
       if (mainExists) {
-        const mainFiles = await this.readStatusDirectory(this.WHATSAPP_STATUS_PATH);
+        const mainFiles = await this.readStatusDirectory(
+          this.WHATSAPP_STATUS_PATH
+        );
         statusFiles.push(...mainFiles);
       }
 
       // Scan WhatsApp Business
-      const businessExists = await RNFS.exists(this.WHATSAPP_BUSINESS_STATUS_PATH);
+      const businessExists = await RNFS.exists(
+        this.WHATSAPP_BUSINESS_STATUS_PATH
+      );
       if (businessExists) {
-        const businessFiles = await this.readStatusDirectory(this.WHATSAPP_BUSINESS_STATUS_PATH);
+        const businessFiles = await this.readStatusDirectory(
+          this.WHATSAPP_BUSINESS_STATUS_PATH
+        );
         statusFiles.push(...businessFiles);
       }
 
       // Sort by timestamp (newest first)
       return statusFiles.sort((a, b) => b.timestamp - a.timestamp);
     } catch (error) {
-      console.error('Error scanning status files:', error);
+      console.error("Error scanning status files:", error);
       return [];
     }
   }
@@ -77,25 +85,29 @@ export class FileSystemService {
   /**
    * Read files from a specific directory
    */
-  private static async readStatusDirectory(path: string): Promise<StatusFile[]> {
+  private static async readStatusDirectory(
+    path: string
+  ): Promise<StatusFile[]> {
     try {
       const files = await RNFS.readDir(path);
       const statusFiles: StatusFile[] = [];
 
       for (const file of files) {
         // Skip .nomedia file and directories
-        if (file.name === '.nomedia' || file.isDirectory()) {
+        if (file.name === ".nomedia" || file.isDirectory()) {
           continue;
         }
 
-        const extension = file.name.split('.').pop()?.toLowerCase();
-        let type: 'image' | 'video' | null = null;
+        const extension = file.name.split(".").pop()?.toLowerCase();
+        let type: "image" | "video" | null = null;
 
         // Determine file type
-        if (['jpg', 'jpeg', 'png', 'gif', 'webp'].includes(extension || '')) {
-          type = 'image';
-        } else if (['mp4', 'mkv', 'avi', 'mov', '3gp'].includes(extension || '')) {
-          type = 'video';
+        if (["jpg", "jpeg", "png", "gif", "webp"].includes(extension || "")) {
+          type = "image";
+        } else if (
+          ["mp4", "mkv", "avi", "mov", "3gp"].includes(extension || "")
+        ) {
+          type = "video";
         }
 
         if (type) {
@@ -129,20 +141,20 @@ export class FileSystemService {
       const destinationPath = `${this.DOWNLOAD_FOLDER}/${fileName}`;
 
       // Copy file
-      const sourcePath = status.uri.replace('file://', '');
+      const sourcePath = status.uri.replace("file://", "");
       await RNFS.copyFile(sourcePath, destinationPath);
 
-      console.log('Status downloaded:', destinationPath);
+      console.log("Status downloaded:", destinationPath);
 
       return {
         success: true,
         savedPath: destinationPath,
       };
     } catch (error) {
-      console.error('Error downloading status:', error);
+      console.error("Error downloading status:", error);
       return {
         success: false,
-        error: error instanceof Error ? error.message : 'Unknown error',
+        error: error instanceof Error ? error.message : "Unknown error",
       };
     }
   }
@@ -150,7 +162,9 @@ export class FileSystemService {
   /**
    * Download multiple status files (batch download)
    */
-  static async downloadMultipleStatuses(statuses: StatusFile[]): Promise<DownloadResult[]> {
+  static async downloadMultipleStatuses(
+    statuses: StatusFile[]
+  ): Promise<DownloadResult[]> {
     const results: DownloadResult[] = [];
 
     for (const status of statuses) {
@@ -177,13 +191,15 @@ export class FileSystemService {
       for (const file of files) {
         if (file.isDirectory()) continue;
 
-        const extension = file.name.split('.').pop()?.toLowerCase();
-        let type: 'image' | 'video' | null = null;
+        const extension = file.name.split(".").pop()?.toLowerCase();
+        let type: "image" | "video" | null = null;
 
-        if (['jpg', 'jpeg', 'png', 'gif', 'webp'].includes(extension || '')) {
-          type = 'image';
-        } else if (['mp4', 'mkv', 'avi', 'mov', '3gp'].includes(extension || '')) {
-          type = 'video';
+        if (["jpg", "jpeg", "png", "gif", "webp"].includes(extension || "")) {
+          type = "image";
+        } else if (
+          ["mp4", "mkv", "avi", "mov", "3gp"].includes(extension || "")
+        ) {
+          type = "video";
         }
 
         if (type) {
@@ -200,7 +216,7 @@ export class FileSystemService {
 
       return downloadedFiles.sort((a, b) => b.timestamp - a.timestamp);
     } catch (error) {
-      console.error('Error getting downloaded files:', error);
+      console.error("Error getting downloaded files:", error);
       return [];
     }
   }
@@ -210,12 +226,12 @@ export class FileSystemService {
    */
   static async deleteFile(filePath: string): Promise<boolean> {
     try {
-      const path = filePath.replace('file://', '');
+      const path = filePath.replace("file://", "");
       await RNFS.unlink(path);
-      console.log('File deleted:', path);
+      console.log("File deleted:", path);
       return true;
     } catch (error) {
-      console.error('Error deleting file:', error);
+      console.error("Error deleting file:", error);
       return false;
     }
   }

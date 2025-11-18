@@ -5,30 +5,36 @@
 ### 1. Environment Setup
 
 #### Install Node.js
+
 Download and install Node.js 18+ from [nodejs.org](https://nodejs.org/)
 
 Verify installation:
+
 ```bash
 node --version
 npm --version
 ```
 
 #### Install React Native CLI
+
 ```bash
 npm install -g react-native-cli
 ```
 
 #### Install Android Studio
+
 1. Download from [developer.android.com](https://developer.android.com/studio)
 2. Install Android SDK (API 33 or higher)
 3. Set up Android environment variables:
 
 **Windows:**
+
 ```bash
 ANDROID_HOME = C:\Users\[YourUsername]\AppData\Local\Android\Sdk
 ```
 
 Add to PATH:
+
 ```
 %ANDROID_HOME%\platform-tools
 %ANDROID_HOME%\tools
@@ -37,6 +43,7 @@ Add to PATH:
 
 **Mac/Linux:**
 Add to `~/.bash_profile` or `~/.zshrc`:
+
 ```bash
 export ANDROID_HOME=$HOME/Library/Android/sdk
 export PATH=$PATH:$ANDROID_HOME/emulator
@@ -46,16 +53,19 @@ export PATH=$PATH:$ANDROID_HOME/platform-tools
 ### 2. Project Setup
 
 #### Clone/Navigate to Project
+
 ```bash
 cd wa
 ```
 
 #### Install Dependencies
+
 ```bash
 npm install
 ```
 
 #### Install CocoaPods (iOS only - Mac)
+
 ```bash
 cd ios
 pod install
@@ -65,6 +75,7 @@ cd ..
 ### 3. Running the App
 
 #### Start Metro Bundler
+
 ```bash
 npm start
 ```
@@ -72,18 +83,22 @@ npm start
 #### Run on Android
 
 **Using USB Device:**
+
 1. Enable Developer Options on your phone
 2. Enable USB Debugging
 3. Connect phone via USB
 4. Run:
+
 ```bash
 npm run android
 ```
 
 **Using Emulator:**
+
 1. Open Android Studio
 2. Start an AVD (Android Virtual Device)
 3. Run:
+
 ```bash
 npm run android
 ```
@@ -93,7 +108,7 @@ npm run android
 When you first launch the app:
 
 1. **Grant Permissions**: App will request storage permissions
-2. **Android 11+ Users**: 
+2. **Android 11+ Users**:
    - Go to Settings → Apps → Status Downloader → Permissions
    - Enable "All files access" or "Files and media"
 3. **Verify WhatsApp**: Ensure WhatsApp is installed and you've viewed some statuses
@@ -104,11 +119,13 @@ When you first launch the app:
 ### Metro Bundler Issues
 
 **Clear cache and restart:**
+
 ```bash
 npm start -- --reset-cache
 ```
 
 **Or:**
+
 ```bash
 watchman watch-del-all
 rm -rf node_modules
@@ -119,6 +136,7 @@ npm start -- --reset-cache
 ### Build Errors
 
 **Clean Android build:**
+
 ```bash
 cd android
 ./gradlew clean
@@ -151,6 +169,7 @@ npm start
 ```
 
 In a new terminal:
+
 ```bash
 npm run android
 ```
@@ -158,10 +177,12 @@ npm run android
 ### Debugging
 
 **Enable Debug Mode:**
+
 - Shake device or press Cmd+M (Mac) / Ctrl+M (Windows)
 - Select "Debug"
 
 **View Logs:**
+
 ```bash
 npx react-native log-android
 ```

@@ -1,4 +1,4 @@
-import React from 'react';
+import React from "react";
 import {
   View,
   Image,
@@ -6,9 +6,9 @@ import {
   StyleSheet,
   Dimensions,
   Text,
-} from 'react-native';
-import { StatusFile } from '@/types';
-import { useTheme } from '@/context/ThemeContext';
+} from "react-native";
+import { StatusFile } from "@/types";
+import { useTheme } from "@/context/ThemeContext";
 
 interface StatusItemProps {
   status: StatusFile;
@@ -17,7 +17,7 @@ interface StatusItemProps {
   onLongPress: () => void;
 }
 
-const { width } = Dimensions.get('window');
+const { width } = Dimensions.get("window");
 const ITEM_SIZE = (width - 48) / 3;
 
 export const StatusItem: React.FC<StatusItemProps> = ({
@@ -41,8 +41,8 @@ export const StatusItem: React.FC<StatusItemProps> = ({
           style={styles.image}
           resizeMode="cover"
         />
-        
-        {status.type === 'video' && (
+
+        {status.type === "video" && (
           <View style={styles.videoIndicator}>
             <View style={styles.playIcon}>
               <Text style={styles.playIconText}>▶</Text>
@@ -51,8 +51,15 @@ export const StatusItem: React.FC<StatusItemProps> = ({
         )}
 
         {isSelected && (
-          <View style={[styles.selectedOverlay, { backgroundColor: colors.overlay }]}>
-            <View style={[styles.checkmark, { backgroundColor: colors.primary }]}>
+          <View
+            style={[
+              styles.selectedOverlay,
+              { backgroundColor: colors.overlay },
+            ]}
+          >
+            <View
+              style={[styles.checkmark, { backgroundColor: colors.primary }]}
+            >
               <Text style={styles.checkmarkText}>✓</Text>
             </View>
           </View>
@@ -68,17 +75,17 @@ const styles = StyleSheet.create({
     height: ITEM_SIZE,
   },
   imageContainer: {
-    width: '100%',
-    height: '100%',
+    width: "100%",
+    height: "100%",
     borderRadius: 8,
-    overflow: 'hidden',
+    overflow: "hidden",
   },
   image: {
-    width: '100%',
-    height: '100%',
+    width: "100%",
+    height: "100%",
   },
   videoIndicator: {
-    position: 'absolute',
+    position: "absolute",
     top: 8,
     right: 8,
   },
@@ -86,30 +93,30 @@ const styles = StyleSheet.create({
     width: 24,
     height: 24,
     borderRadius: 12,
-    backgroundColor: 'rgba(0, 0, 0, 0.6)',
-    justifyContent: 'center',
-    alignItems: 'center',
+    backgroundColor: "rgba(0, 0, 0, 0.6)",
+    justifyContent: "center",
+    alignItems: "center",
   },
   playIconText: {
-    color: '#FFFFFF',
+    color: "#FFFFFF",
     fontSize: 10,
     marginLeft: 2,
   },
   selectedOverlay: {
     ...StyleSheet.absoluteFillObject,
-    justifyContent: 'center',
-    alignItems: 'center',
+    justifyContent: "center",
+    alignItems: "center",
   },
   checkmark: {
     width: 32,
     height: 32,
     borderRadius: 16,
-    justifyContent: 'center',
-    alignItems: 'center',
+    justifyContent: "center",
+    alignItems: "center",
   },
   checkmarkText: {
-    color: '#FFFFFF',
+    color: "#FFFFFF",
     fontSize: 18,
-    fontWeight: 'bold',
+    fontWeight: "bold",
   },
 });

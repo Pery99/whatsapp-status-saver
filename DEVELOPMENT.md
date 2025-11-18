@@ -28,12 +28,14 @@ App.tsx (Root)
 ### Services Layer
 
 1. **FileSystemService**: All file operations
+
    - Scan WhatsApp directories
    - Download/copy files
    - Delete files
    - List downloaded files
 
 2. **PermissionService**: Permission management
+
    - Request storage permissions
    - Handle different Android versions
    - Check permission status
@@ -48,12 +50,14 @@ App.tsx (Root)
 ### File System Access
 
 **Why we use RNFS:**
+
 - Direct file system access
 - Copy files without compression
 - Reliable on Android
 - Simple API
 
 **WhatsApp Status Paths:**
+
 - Changed in Android 11+ to `/Android/media/` from `/WhatsApp/`
 - Support both regular and business WhatsApp
 - Handle `.nomedia` file properly
@@ -61,6 +65,7 @@ App.tsx (Root)
 ### Permission Handling
 
 **Android Version Strategy:**
+
 - Android 6-9: `READ/WRITE_EXTERNAL_STORAGE`
 - Android 10: Scoped storage with legacy flag
 - Android 11+: `MANAGE_EXTERNAL_STORAGE` (requires manual grant)
@@ -68,12 +73,14 @@ App.tsx (Root)
 ### UI/UX Choices
 
 **Grid Layout:**
+
 - 3 columns for optimal viewing
 - Square thumbnails for consistency
 - Video indicator overlay
 - Selection checkmark overlay
 
 **Theme System:**
+
 - Auto-detect system theme
 - Manual override option
 - Consistent color palette
@@ -146,36 +153,42 @@ static async methodName(): Promise<ReturnType> {
 ### Manual Testing Checklist
 
 **Permissions:**
+
 - [ ] First launch permission request
 - [ ] Permission denial handling
 - [ ] Permission grant flow
 - [ ] Android 11+ special permissions
 
 **Status Loading:**
+
 - [ ] Empty state display
 - [ ] Loading indicator
 - [ ] Refresh functionality
 - [ ] Error handling
 
 **Downloads:**
+
 - [ ] Single download
 - [ ] Batch download
 - [ ] Progress indication
 - [ ] Success/error messages
 
 **Auto-Save:**
+
 - [ ] Enable/disable toggle
 - [ ] New status detection
 - [ ] Notification on save
 - [ ] Settings persistence
 
 **Theme:**
+
 - [ ] Light mode display
 - [ ] Dark mode display
 - [ ] Theme toggle
 - [ ] System theme detection
 
 **Navigation:**
+
 - [ ] Home to Downloads
 - [ ] Downloads back to Home
 - [ ] Preview open/close
@@ -192,18 +205,21 @@ static async methodName(): Promise<ReturnType> {
 ## Future Improvements
 
 ### Phase 1: Core Enhancements
+
 - [ ] iOS support
 - [ ] Real-time status detection
 - [ ] Background auto-save
 - [ ] Status expiration indicators
 
 ### Phase 2: Features
+
 - [ ] Search and filter
 - [ ] Categories/folders
 - [ ] Favorites system
 - [ ] Share to WhatsApp
 
 ### Phase 3: Advanced
+
 - [ ] Cloud backup (Google Drive, Dropbox)
 - [ ] Image editor
 - [ ] Video trimmer
@@ -214,6 +230,7 @@ static async methodName(): Promise<ReturnType> {
 ### Common Issues
 
 **Metro Bundler:**
+
 ```bash
 # If you see module resolution errors
 watchman watch-del-all
@@ -223,6 +240,7 @@ npm start -- --reset-cache
 ```
 
 **Android Build:**
+
 ```bash
 # If build fails
 cd android
@@ -231,6 +249,7 @@ cd android
 ```
 
 **Permissions:**
+
 ```bash
 # Check granted permissions
 adb shell dumpsys package com.whatsappstatusdownloader | grep permission
@@ -239,12 +258,14 @@ adb shell dumpsys package com.whatsappstatusdownloader | grep permission
 ### Logging
 
 Add console logs strategically:
+
 ```typescript
-console.log('[ServiceName] Operation:', data);
-console.error('[ServiceName] Error:', error);
+console.log("[ServiceName] Operation:", data);
+console.error("[ServiceName] Error:", error);
 ```
 
 View logs:
+
 ```bash
 npx react-native log-android | grep "ServiceName"
 ```
@@ -252,27 +273,34 @@ npx react-native log-android | grep "ServiceName"
 ## Dependencies
 
 ### Core
+
 - `react-native`: Cross-platform framework
 - `react`: UI library
 - `typescript`: Type safety
 
 ### Navigation
+
 - `@react-navigation/native`: Navigation framework
 - `@react-navigation/stack`: Stack navigation
 
 ### File System
+
 - `react-native-fs`: File operations
 
 ### Permissions
+
 - `react-native-permissions`: Permission management
 
 ### Media
+
 - `react-native-video`: Video playback
 
 ### Storage
+
 - `@react-native-async-storage/async-storage`: Persistent storage
 
 ### UI
+
 - `react-native-gesture-handler`: Gesture support
 - `react-native-safe-area-context`: Safe area support
 - `react-native-screens`: Native screen optimization
@@ -280,18 +308,21 @@ npx react-native log-android | grep "ServiceName"
 ## Build Configuration
 
 ### Debug Build
+
 ```bash
 cd android
 ./gradlew assembleDebug
 ```
 
 ### Release Build
+
 ```bash
 cd android
 ./gradlew assembleRelease
 ```
 
 ### Bundle for Play Store
+
 ```bash
 cd android
 ./gradlew bundleRelease
@@ -300,6 +331,7 @@ cd android
 ## Environment Variables
 
 Create `.env` file for configuration:
+
 ```
 DOWNLOAD_FOLDER_NAME=WhatsAppDownloader
 MAX_FILE_SIZE=100
@@ -309,6 +341,7 @@ AUTO_SAVE_ENABLED=false
 ## Git Workflow
 
 ### Branch Strategy
+
 - `main`: Production-ready code
 - `develop`: Development branch
 - `feature/*`: New features
@@ -316,6 +349,7 @@ AUTO_SAVE_ENABLED=false
 - `hotfix/*`: Emergency fixes
 
 ### Commit Messages
+
 ```
 feat: Add auto-save functionality
 fix: Resolve permission error on Android 11
@@ -338,6 +372,7 @@ test: Add unit tests for AutoSaveService
 ## Support
 
 For development questions:
+
 1. Check this file
 2. Review service implementations
 3. Check React Native docs

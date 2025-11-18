@@ -1,9 +1,9 @@
-import AsyncStorage from '@react-native-async-storage/async-storage';
-import { FileSystemService } from './FileSystemService';
-import { StatusFile } from '@/types';
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import { FileSystemService } from "./FileSystemService";
+import { StatusFile } from "@/types";
 
-const AUTO_SAVE_KEY = 'auto_save_enabled';
-const SAVED_STATUS_IDS_KEY = 'saved_status_ids';
+const AUTO_SAVE_KEY = "auto_save_enabled";
+const SAVED_STATUS_IDS_KEY = "saved_status_ids";
 
 export class AutoSaveService {
   /**
@@ -12,9 +12,9 @@ export class AutoSaveService {
   static async isAutoSaveEnabled(): Promise<boolean> {
     try {
       const value = await AsyncStorage.getItem(AUTO_SAVE_KEY);
-      return value === 'true';
+      return value === "true";
     } catch (error) {
-      console.error('Error checking auto-save status:', error);
+      console.error("Error checking auto-save status:", error);
       return false;
     }
   }
@@ -26,7 +26,7 @@ export class AutoSaveService {
     try {
       await AsyncStorage.setItem(AUTO_SAVE_KEY, enabled.toString());
     } catch (error) {
-      console.error('Error setting auto-save status:', error);
+      console.error("Error setting auto-save status:", error);
     }
   }
 
@@ -41,7 +41,7 @@ export class AutoSaveService {
       }
       return new Set();
     } catch (error) {
-      console.error('Error getting saved status IDs:', error);
+      console.error("Error getting saved status IDs:", error);
       return new Set();
     }
   }
@@ -51,9 +51,12 @@ export class AutoSaveService {
    */
   private static async saveSavedStatusIds(ids: Set<string>): Promise<void> {
     try {
-      await AsyncStorage.setItem(SAVED_STATUS_IDS_KEY, JSON.stringify([...ids]));
+      await AsyncStorage.setItem(
+        SAVED_STATUS_IDS_KEY,
+        JSON.stringify([...ids])
+      );
     } catch (error) {
-      console.error('Error saving status IDs:', error);
+      console.error("Error saving status IDs:", error);
     }
   }
 
@@ -68,25 +71,27 @@ export class AutoSaveService {
       }
 
       const savedIds = await this.getSavedStatusIds();
-      const newStatuses = statuses.filter(status => !savedIds.has(status.id));
+      const newStatuses = statuses.filter((status) => !savedIds.has(status.id));
 
       if (newStatuses.length === 0) {
         return 0;
       }
 
       // Download new statuses
-      const results = await FileSystemService.downloadMultipleStatuses(newStatuses);
-      const successfulDownloads = results.filter(r => r.success).length;
+      const results = await FileSystemService.downloadMultipleStatuses(
+        newStatuses
+      );
+      const successfulDownloads = results.filter((r) => r.success).length;
 
       // Update saved IDs
       if (successfulDownloads > 0) {
-        newStatuses.forEach(status => savedIds.add(status.id));
+        newStatuses.forEach((status) => savedIds.add(status.id));
         await this.saveSavedStatusIds(savedIds);
       }
 
       return successfulDownloads;
     } catch (error) {
-      console.error('Error in auto-save:', error);
+      console.error("Error in auto-save:", error);
       return 0;
     }
   }
@@ -98,7 +103,7 @@ export class AutoSaveService {
     try {
       await AsyncStorage.removeItem(SAVED_STATUS_IDS_KEY);
     } catch (error) {
-      console.error('Error clearing history:', error);
+      console.error("Error clearing history:", error);
     }
   }
 }

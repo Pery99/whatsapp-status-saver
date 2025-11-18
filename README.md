@@ -5,6 +5,7 @@ A fully functional mobile app built with React Native that allows users to view 
 ## 📱 Features
 
 ### Core Functionality
+
 - **Status Detection**: Automatically detect and display WhatsApp statuses stored locally on the device
 - **Media Support**: View both images and videos in high quality
 - **Preview & Select**: Browse statuses in a grid layout, tap to preview, and select multiple items
@@ -12,6 +13,7 @@ A fully functional mobile app built with React Native that allows users to view 
 - **Offline Operation**: No internet required - works entirely on the device
 
 ### Enhanced Features
+
 - **Auto-Save**: Automatically download new statuses as they appear
 - **Dark/Light Mode**: Toggle between themes for comfortable viewing
 - **Downloads Manager**: View and manage previously downloaded statuses
@@ -119,10 +121,12 @@ The app accesses WhatsApp statuses from the following directories:
 ### Downloading Statuses
 
 **Single Download:**
+
 1. Tap a status to preview
 2. Tap "⬇ Download" button
 
 **Batch Download:**
+
 1. Long-press a status to enter selection mode
 2. Tap additional statuses to select them
 3. Tap "Download All" button at the bottom
@@ -209,6 +213,7 @@ The APK will be at: `android/app/build/outputs/apk/release/app-release.apk`
 ### Signing the App
 
 1. Generate a keystore:
+
 ```bash
 keytool -genkey -v -keystore my-release-key.keystore -alias my-key-alias -keyalg RSA -keysize 2048 -validity 10000
 ```
@@ -216,6 +221,7 @@ keytool -genkey -v -keystore my-release-key.keystore -alias my-key-alias -keyalg
 2. Update `android/app/build.gradle` with signing config
 
 3. Build signed APK:
+
 ```bash
 cd android
 ./gradlew assembleRelease
@@ -265,4 +271,3 @@ For issues or questions:
 ---
 
 **Made with ❤️ using React Native**
-

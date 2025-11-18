@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState } from "react";
 import {
   Modal,
   View,
@@ -9,10 +9,10 @@ import {
   Dimensions,
   StatusBar,
   Share,
-} from 'react-native';
-import Video from 'react-native-video';
-import { StatusFile } from '@/types';
-import { useTheme } from '@/context/ThemeContext';
+} from "react-native";
+import Video from "react-native-video";
+import { StatusFile } from "@/types";
+import { useTheme } from "@/context/ThemeContext";
 
 interface StatusPreviewProps {
   visible: boolean;
@@ -23,7 +23,7 @@ interface StatusPreviewProps {
   showDelete?: boolean;
 }
 
-const { width, height } = Dimensions.get('window');
+const { width, height } = Dimensions.get("window");
 
 export const StatusPreview: React.FC<StatusPreviewProps> = ({
   visible,
@@ -44,7 +44,7 @@ export const StatusPreview: React.FC<StatusPreviewProps> = ({
   const formatTime = (seconds: number): string => {
     const mins = Math.floor(seconds / 60);
     const secs = Math.floor(seconds % 60);
-    return `${mins}:${secs.toString().padStart(2, '0')}`;
+    return `${mins}:${secs.toString().padStart(2, "0")}`;
   };
 
   const formatFileSize = (bytes: number): string => {
@@ -55,17 +55,21 @@ export const StatusPreview: React.FC<StatusPreviewProps> = ({
 
   const formatDate = (timestamp: number): string => {
     const date = new Date(timestamp);
-    return date.toLocaleDateString() + ' ' + date.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+    return (
+      date.toLocaleDateString() +
+      " " +
+      date.toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" })
+    );
   };
 
   const handleShare = async () => {
     try {
       await Share.share({
-        message: 'Check out this WhatsApp status!',
+        message: "Check out this WhatsApp status!",
         url: status.uri,
       });
     } catch (error) {
-      console.error('Error sharing:', error);
+      console.error("Error sharing:", error);
     }
   };
 
@@ -78,13 +82,20 @@ export const StatusPreview: React.FC<StatusPreviewProps> = ({
     >
       <StatusBar hidden />
       <View style={styles.container}>
-        <TouchableOpacity 
+        <TouchableOpacity
           style={styles.content}
           activeOpacity={1}
-          onPress={() => status.type === 'video' && setShowControls(!showControls)}
+          onPress={() =>
+            status.type === "video" && setShowControls(!showControls)
+          }
         >
-          <View style={[styles.mediaContainer, { backgroundColor: colors.background }]}>
-            {status.type === 'image' ? (
+          <View
+            style={[
+              styles.mediaContainer,
+              { backgroundColor: colors.background },
+            ]}
+          >
+            {status.type === "image" ? (
               <Image
                 source={{ uri: status.uri }}
                 style={styles.media}
@@ -102,20 +113,28 @@ export const StatusPreview: React.FC<StatusPreviewProps> = ({
                   onProgress={(data) => setCurrentTime(data.currentTime)}
                   onLoad={(data) => setDuration(data.duration)}
                 />
-                
+
                 {/* Custom Video Controls */}
                 {showControls && (
                   <View style={styles.videoControls}>
                     <TouchableOpacity
-                      style={[styles.playButton, { backgroundColor: colors.overlay }]}
+                      style={[
+                        styles.playButton,
+                        { backgroundColor: colors.overlay },
+                      ]}
                       onPress={() => setVideoPaused(!videoPaused)}
                     >
                       <Text style={styles.playButtonText}>
-                        {videoPaused ? '▶️' : '⏸️'}
+                        {videoPaused ? "▶️" : "⏸️"}
                       </Text>
                     </TouchableOpacity>
-                    
-                    <View style={[styles.timeContainer, { backgroundColor: colors.overlay }]}>
+
+                    <View
+                      style={[
+                        styles.timeContainer,
+                        { backgroundColor: colors.overlay },
+                      ]}
+                    >
                       <Text style={styles.timeText}>
                         {formatTime(currentTime)} / {formatTime(duration)}
                       </Text>
@@ -130,8 +149,12 @@ export const StatusPreview: React.FC<StatusPreviewProps> = ({
         {/* Metadata Info */}
         {showControls && (
           <View style={[styles.metadata, { backgroundColor: colors.overlay }]}>
-            <Text style={styles.metadataText}>📏 {formatFileSize(status.size)}</Text>
-            <Text style={styles.metadataText}>📅 {formatDate(status.timestamp)}</Text>
+            <Text style={styles.metadataText}>
+              📏 {formatFileSize(status.size)}
+            </Text>
+            <Text style={styles.metadataText}>
+              📅 {formatDate(status.timestamp)}
+            </Text>
           </View>
         )}
 
@@ -159,16 +182,24 @@ export const StatusPreview: React.FC<StatusPreviewProps> = ({
               style={[styles.footerButton, { backgroundColor: colors.error }]}
               onPress={onDelete}
             >
-              <Text style={[styles.footerButtonText, styles.downloadButtonText]}>
+              <Text
+                style={[styles.footerButtonText, styles.downloadButtonText]}
+              >
                 🗑️ Delete
               </Text>
             </TouchableOpacity>
           ) : (
             <TouchableOpacity
-              style={[styles.footerButton, styles.downloadButton, { backgroundColor: colors.primary }]}
+              style={[
+                styles.footerButton,
+                styles.downloadButton,
+                { backgroundColor: colors.primary },
+              ]}
               onPress={onDownload}
             >
-              <Text style={[styles.footerButtonText, styles.downloadButtonText]}>
+              <Text
+                style={[styles.footerButtonText, styles.downloadButtonText]}
+              >
                 ⬇ Download
               </Text>
             </TouchableOpacity>
@@ -182,34 +213,34 @@ export const StatusPreview: React.FC<StatusPreviewProps> = ({
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#000000',
+    backgroundColor: "#000000",
   },
   content: {
     flex: 1,
   },
   mediaContainer: {
     flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
+    justifyContent: "center",
+    alignItems: "center",
   },
   media: {
     width: width,
     height: height,
   },
   videoControls: {
-    position: 'absolute',
+    position: "absolute",
     bottom: 100,
     left: 0,
     right: 0,
-    alignItems: 'center',
+    alignItems: "center",
     gap: 16,
   },
   playButton: {
     width: 60,
     height: 60,
     borderRadius: 30,
-    justifyContent: 'center',
-    alignItems: 'center',
+    justifyContent: "center",
+    alignItems: "center",
   },
   playButtonText: {
     fontSize: 24,
@@ -220,28 +251,28 @@ const styles = StyleSheet.create({
     borderRadius: 20,
   },
   timeText: {
-    color: '#FFFFFF',
+    color: "#FFFFFF",
     fontSize: 14,
-    fontWeight: '600',
+    fontWeight: "600",
   },
   metadata: {
-    position: 'absolute',
+    position: "absolute",
     top: 80,
     left: 16,
     right: 16,
-    flexDirection: 'row',
-    justifyContent: 'space-around',
+    flexDirection: "row",
+    justifyContent: "space-around",
     paddingVertical: 8,
     paddingHorizontal: 12,
     borderRadius: 8,
   },
   metadataText: {
-    color: '#FFFFFF',
+    color: "#FFFFFF",
     fontSize: 12,
-    fontWeight: '600',
+    fontWeight: "600",
   },
   header: {
-    position: 'absolute',
+    position: "absolute",
     top: 40,
     right: 16,
     zIndex: 10,
@@ -250,38 +281,38 @@ const styles = StyleSheet.create({
     width: 40,
     height: 40,
     borderRadius: 20,
-    justifyContent: 'center',
-    alignItems: 'center',
+    justifyContent: "center",
+    alignItems: "center",
   },
   headerButtonText: {
-    color: '#FFFFFF',
+    color: "#FFFFFF",
     fontSize: 24,
-    fontWeight: 'bold',
+    fontWeight: "bold",
   },
   footer: {
-    position: 'absolute',
+    position: "absolute",
     bottom: 40,
     left: 16,
     right: 16,
-    flexDirection: 'row',
-    justifyContent: 'space-between',
+    flexDirection: "row",
+    justifyContent: "space-between",
     gap: 12,
   },
   footerButton: {
     flex: 1,
     paddingVertical: 14,
     borderRadius: 8,
-    alignItems: 'center',
+    alignItems: "center",
   },
   footerButtonText: {
-    color: '#FFFFFF',
+    color: "#FFFFFF",
     fontSize: 16,
-    fontWeight: '600',
+    fontWeight: "600",
   },
   downloadButton: {
     flex: 1.5,
   },
   downloadButtonText: {
-    fontWeight: 'bold',
+    fontWeight: "bold",
   },
 });

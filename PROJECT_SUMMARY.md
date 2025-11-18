@@ -9,6 +9,7 @@ Your WhatsApp Status Downloader app is now **complete and ready to use**! This d
 ## ✅ Completed Features
 
 ### 1. **Core Functionality**
+
 - ✅ Status detection from WhatsApp and WhatsApp Business
 - ✅ Grid view display of all available statuses
 - ✅ Support for images (jpg, png, gif, webp) and videos (mp4, mkv, avi, mov, 3gp)
@@ -18,6 +19,7 @@ Your WhatsApp Status Downloader app is now **complete and ready to use**! This d
 - ✅ Original quality preservation
 
 ### 2. **Enhanced Features**
+
 - ✅ **Auto-Save**: Automatically download new statuses
 - ✅ **Dark/Light Mode**: Toggle between themes
 - ✅ **Downloads Manager**: View and manage saved statuses
@@ -28,6 +30,7 @@ Your WhatsApp Status Downloader app is now **complete and ready to use**! This d
 - ✅ **Pull to Refresh**: Update status list easily
 
 ### 3. **User Interface**
+
 - ✅ Clean, modern design
 - ✅ Intuitive navigation
 - ✅ Settings panel with toggles
@@ -37,6 +40,7 @@ Your WhatsApp Status Downloader app is now **complete and ready to use**! This d
 - ✅ Responsive grid layout
 
 ### 4. **Technical Implementation**
+
 - ✅ TypeScript for type safety
 - ✅ Service-based architecture
 - ✅ Context API for theme management
@@ -108,20 +112,24 @@ For detailed setup instructions, see **SETUP.md**
 ## 📱 How to Use the App
 
 ### Viewing Statuses
+
 1. Open the app → Permissions will be requested
 2. Status list loads automatically
 3. Pull down to refresh for new statuses
 
 ### Downloading
+
 - **Single**: Tap status → Preview → Download button
 - **Multiple**: Long-press status → Select more → Download All
 
 ### Managing Downloads
+
 1. Tap 📥 icon in header
 2. View all saved statuses
 3. Select and delete unwanted items
 
 ### Settings
+
 1. Tap ⚙️ icon in header
 2. Toggle Dark Mode on/off
 3. Enable/disable Auto-Save
@@ -133,17 +141,20 @@ For detailed setup instructions, see **SETUP.md**
 ### Important Components
 
 **HomeScreen.tsx**
+
 - Main interface
 - Displays current WhatsApp statuses
 - Settings panel
 - Download functionality
 
 **DownloadsScreen.tsx**
+
 - Shows downloaded statuses
 - Delete functionality
 - Separate view for saved items
 
 **StatusPreview.tsx**
+
 - Full-screen preview
 - Video player controls
 - Share and download actions
@@ -152,17 +163,20 @@ For detailed setup instructions, see **SETUP.md**
 ### Core Services
 
 **FileSystemService.ts**
+
 - Scans WhatsApp directories
 - Copies files for download
 - Manages download folder
 - Lists downloaded files
 
 **PermissionService.ts**
+
 - Handles Android permissions
 - Different strategies for Android versions
 - Permission status checking
 
 **AutoSaveService.ts**
+
 - Tracks previously saved statuses
 - Auto-downloads new ones
 - Manages settings persistence
@@ -195,18 +209,19 @@ cd android && ./gradlew clean
 
 ## 📖 Documentation Files
 
-| File | Purpose |
-|------|---------|
-| **README.md** | Complete project documentation, features, tech stack |
-| **SETUP.md** | Step-by-step installation and configuration guide |
-| **QUICK_REFERENCE.md** | Quick commands, shortcuts, and common tasks |
-| **DEVELOPMENT.md** | Architecture, design decisions, debugging tips |
+| File                   | Purpose                                              |
+| ---------------------- | ---------------------------------------------------- |
+| **README.md**          | Complete project documentation, features, tech stack |
+| **SETUP.md**           | Step-by-step installation and configuration guide    |
+| **QUICK_REFERENCE.md** | Quick commands, shortcuts, and common tasks          |
+| **DEVELOPMENT.md**     | Architecture, design decisions, debugging tips       |
 
 ---
 
 ## ⚡ Quick Reference
 
 ### App Controls
+
 - **Preview**: Tap status
 - **Select**: Long-press status
 - **Refresh**: Pull down
@@ -214,10 +229,12 @@ cd android && ./gradlew clean
 - **Downloads**: Tap 📥
 
 ### File Locations
+
 - **WhatsApp Statuses**: `/Android/media/com.whatsapp/WhatsApp/Media/.Statuses`
 - **Downloads**: `/Download/WhatsAppDownloader/`
 
 ### Supported Formats
+
 - **Images**: jpg, jpeg, png, gif, webp
 - **Videos**: mp4, mkv, avi, mov, 3gp
 
@@ -226,15 +243,19 @@ cd android && ./gradlew clean
 ## 🐛 Troubleshooting
 
 ### No Statuses Showing
+
 → Check WhatsApp is installed and view some statuses first
 
 ### Permission Errors
+
 → For Android 11+: Settings → Apps → Status Downloader → Enable "All files access"
 
 ### Build Failures
+
 → Run: `cd android && ./gradlew clean && cd .. && npm run android`
 
 ### App Crashes
+
 → Clear cache: `npm start -- --reset-cache`
 
 For more solutions, see **README.md** troubleshooting section.
@@ -269,18 +290,21 @@ For more solutions, see **README.md** troubleshooting section.
 ## 🚦 Next Steps
 
 ### To Run the App:
+
 1. Read **SETUP.md** for environment configuration
 2. Run `npm install`
 3. Execute `npm run android`
 4. Grant permissions when prompted
 
 ### To Customize:
+
 1. Review **DEVELOPMENT.md** for architecture
 2. Modify colors in `ThemeContext.tsx`
 3. Adjust paths in `FileSystemService.ts`
 4. Add features as needed
 
 ### To Deploy:
+
 1. Update version in `package.json`
 2. Build release APK: `cd android && ./gradlew assembleRelease`
 3. Test on multiple devices
@@ -303,6 +327,7 @@ For more solutions, see **README.md** troubleshooting section.
 ## 🎓 Learning Points
 
 This project demonstrates:
+
 - React Native mobile development
 - File system operations
 - Permission management
@@ -327,7 +352,7 @@ This project demonstrates:
 
 ## 🎉 You're All Set!
 
-Your WhatsApp Status Downloader is **complete and ready to use**. 
+Your WhatsApp Status Downloader is **complete and ready to use**.
 
 Run `npm install && npm run android` to start downloading statuses!
 

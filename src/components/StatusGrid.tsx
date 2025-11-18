@@ -1,4 +1,4 @@
-import React from 'react';
+import React from "react";
 import {
   View,
   FlatList,
@@ -6,10 +6,10 @@ import {
   Text,
   ActivityIndicator,
   RefreshControl,
-} from 'react-native';
-import { StatusFile } from '@/types';
-import { StatusItem } from './StatusItem';
-import { useTheme } from '@/context/ThemeContext';
+} from "react-native";
+import { StatusFile } from "@/types";
+import { StatusItem } from "./StatusItem";
+import { useTheme } from "@/context/ThemeContext";
 
 interface StatusGridProps {
   statuses: StatusFile[];
@@ -34,7 +34,9 @@ export const StatusGrid: React.FC<StatusGridProps> = ({
 
   if (loading) {
     return (
-      <View style={[styles.centerContainer, { backgroundColor: colors.background }]}>
+      <View
+        style={[styles.centerContainer, { backgroundColor: colors.background }]}
+      >
         <ActivityIndicator size="large" color={colors.primary} />
         <Text style={[styles.loadingText, { color: colors.textSecondary }]}>
           Loading statuses...
@@ -45,7 +47,9 @@ export const StatusGrid: React.FC<StatusGridProps> = ({
 
   if (statuses.length === 0) {
     return (
-      <View style={[styles.centerContainer, { backgroundColor: colors.background }]}>
+      <View
+        style={[styles.centerContainer, { backgroundColor: colors.background }]}
+      >
         <Text style={[styles.emptyText, { color: colors.textSecondary }]}>
           No statuses found
         </Text>
@@ -91,8 +95,8 @@ const styles = StyleSheet.create({
   },
   centerContainer: {
     flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
+    justifyContent: "center",
+    alignItems: "center",
     padding: 20,
   },
   loadingText: {
@@ -101,11 +105,11 @@ const styles = StyleSheet.create({
   },
   emptyText: {
     fontSize: 18,
-    fontWeight: '600',
+    fontWeight: "600",
     marginBottom: 8,
   },
   emptySubtext: {
     fontSize: 14,
-    textAlign: 'center',
+    textAlign: "center",
   },
 });

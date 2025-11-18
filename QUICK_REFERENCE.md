@@ -15,32 +15,35 @@ npm run android
 
 ## 📱 App Controls
 
-| Action | Gesture |
-|--------|---------|
-| **Preview status** | Tap on status |
-| **Select multiple** | Long-press any status |
-| **Deselect all** | Tap "Clear" in header |
-| **Refresh list** | Pull down to refresh |
-| **Open settings** | Tap ⚙️ icon |
-| **View downloads** | Tap 📥 icon |
-| **Toggle video** | Tap screen during playback |
-| **Share status** | Tap 📤 in preview |
-| **Download status** | Tap ⬇ in preview |
+| Action              | Gesture                    |
+| ------------------- | -------------------------- |
+| **Preview status**  | Tap on status              |
+| **Select multiple** | Long-press any status      |
+| **Deselect all**    | Tap "Clear" in header      |
+| **Refresh list**    | Pull down to refresh       |
+| **Open settings**   | Tap ⚙️ icon                |
+| **View downloads**  | Tap 📥 icon                |
+| **Toggle video**    | Tap screen during playback |
+| **Share status**    | Tap 📤 in preview          |
+| **Download status** | Tap ⬇ in preview           |
 
 ## 🎨 Features Quick Access
 
 ### Home Screen
+
 - **Grid View**: All available WhatsApp statuses
 - **Settings Panel**: Dark mode, Auto-save toggle
 - **Batch Selection**: Select multiple for download
 - **Status Count**: Shows total available statuses
 
 ### Downloads Screen
+
 - **Saved Statuses**: All previously downloaded items
 - **Delete Function**: Remove unwanted downloads
 - **Persistent Storage**: Files saved permanently
 
 ### Preview Screen
+
 - **Full Screen**: Immersive viewing experience
 - **Video Controls**: Play/pause, time display
 - **Metadata**: File size, date, duration
@@ -48,22 +51,24 @@ npm run android
 
 ## ⚡ Keyboard Shortcuts (Development)
 
-| Key | Action |
-|-----|--------|
-| **R** | Reload app |
-| **D** | Open dev menu |
+| Key              | Action        |
+| ---------------- | ------------- |
+| **R**            | Reload app    |
+| **D**            | Open dev menu |
 | **Cmd/Ctrl + M** | Show dev menu |
-| **Cmd/Ctrl + D** | Debug mode |
+| **Cmd/Ctrl + D** | Debug mode    |
 
 ## 📂 File Locations
 
 ### WhatsApp Status Directories
+
 ```
 /storage/emulated/0/Android/media/com.whatsapp/WhatsApp/Media/.Statuses
 /storage/emulated/0/Android/media/com.whatsapp.w4b/WhatsApp Business/Media/.Statuses
 ```
 
 ### Download Directory
+
 ```
 /storage/emulated/0/Download/WhatsAppDownloader/
 ```
@@ -81,6 +86,7 @@ npm run lint       # Run linter
 ## 🎯 Common Tasks
 
 ### Install New Package
+
 ```bash
 npm install <package-name>
 cd android && ./gradlew clean
@@ -88,17 +94,20 @@ cd .. && npm run android
 ```
 
 ### Clear Cache
+
 ```bash
 npm start -- --reset-cache
 ```
 
 ### View Logs
+
 ```bash
 npx react-native log-android  # Android logs
 npx react-native log-ios       # iOS logs
 ```
 
 ### Clean Build
+
 ```bash
 cd android
 ./gradlew clean
@@ -111,6 +120,7 @@ npm run android
 ## 🐛 Quick Fixes
 
 ### App Won't Start
+
 ```bash
 watchman watch-del-all
 rm -rf node_modules package-lock.json
@@ -119,6 +129,7 @@ npm start -- --reset-cache
 ```
 
 ### Permission Issues
+
 ```bash
 # Uninstall and reinstall
 adb uninstall com.whatsappstatusdownloader
@@ -126,6 +137,7 @@ npm run android
 ```
 
 ### Build Errors
+
 ```bash
 cd android
 ./gradlew clean
@@ -135,12 +147,14 @@ cd android
 ## 📊 File Types Supported
 
 ### Images
+
 - `.jpg`, `.jpeg` - JPEG images
 - `.png` - PNG images
 - `.gif` - Animated GIFs
 - `.webp` - WebP format
 
 ### Videos
+
 - `.mp4` - MP4 videos
 - `.mkv` - Matroska videos
 - `.avi` - AVI videos
@@ -150,12 +164,14 @@ cd android
 ## 🎨 Theme Colors
 
 ### Light Mode
+
 - Primary: `#25D366` (WhatsApp Green)
 - Background: `#FFFFFF`
 - Surface: `#F5F5F5`
 - Text: `#000000`
 
 ### Dark Mode
+
 - Primary: `#25D366` (WhatsApp Green)
 - Background: `#121212`
 - Surface: `#1E1E1E`
@@ -218,6 +234,7 @@ adb shell dumpsys package com.whatsappstatusdownloader
 ## 📞 Quick Support
 
 **Before reporting issues:**
+
 1. Check README.md troubleshooting
 2. Review SETUP.md for common fixes
 3. Clear cache and rebuild
@@ -225,6 +242,7 @@ adb shell dumpsys package com.whatsappstatusdownloader
 5. Verify WhatsApp is installed
 
 **When reporting:**
+
 - Include error messages
 - Describe steps to reproduce
 - Mention Android version
