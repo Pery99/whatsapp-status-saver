@@ -1,0 +1,17 @@
+{
+  "name": "WhatsAppStatusDownloader",
+  "displayName": "Status Downloader",
+  "expo": {
+    "name": "Status Downloader",
+    "slug": "whatsapp-status-downloader",
+    "version": "1.0.0",
+    "android": {
+      "package": "com.whatsappstatusdownloader"
+    },
+    "extra": {
+      "eas": {
+        "projectId": "85211598-ed0f-4a7a-a9bc-d008f1ddfc8c"
+      }
+    }
+  }
+}
