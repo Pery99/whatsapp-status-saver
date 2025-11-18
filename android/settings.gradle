@@ -1,15 +1,21 @@
-rootProject.name = 'WhatsAppStatusDownloader'
-apply from: file("../node_modules/@react-native/gradle-plugin/settings.gradle")
-
-includeBuild('../node_modules/@react-native/gradle-plugin')
+pluginManagement {
+    repositories {
+        google()
+        mavenCentral()
+        gradlePluginPortal()
+    }
+}
 
 plugins {
     id("com.facebook.react.settings")
 }
+
+rootProject.name = 'WhatsAppStatusDownloader'
+
+includeBuild('../node_modules/@react-native/gradle-plugin')
 
 extensions.configure(com.facebook.react.ReactSettingsExtension) {
     autolinkLibrariesFromCommand()
 }
 
 include ':app'
-includeBuild('../node_modules/@react-native/gradle-plugin')
