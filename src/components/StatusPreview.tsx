@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import {
   Modal,
   View,
@@ -10,7 +10,6 @@ import {
   StatusBar,
   Share,
 } from "react-native";
-import Video from "react-native-video";
 import { StatusFile } from "@/types";
 import { useTheme } from "@/context/ThemeContext";
 
@@ -34,18 +33,7 @@ export const StatusPreview: React.FC<StatusPreviewProps> = ({
   showDelete = false,
 }) => {
   const { colors } = useTheme();
-  const [videoPaused, setVideoPaused] = useState(false);
-  const [currentTime, setCurrentTime] = useState(0);
-  const [duration, setDuration] = useState(0);
-  const [showControls, setShowControls] = useState(true);
-
   if (!status) return null;
-
-  const formatTime = (seconds: number): string => {
-    const mins = Math.floor(seconds / 60);
-    const secs = Math.floor(seconds % 60);
-    return `${mins}:${secs.toString().padStart(2, "0")}`;
-  };
 
   const formatFileSize = (bytes: number): string => {
     if (bytes < 1024) return `${bytes} B`;
@@ -74,134 +62,41 @@ export const StatusPreview: React.FC<StatusPreviewProps> = ({
   };
 
   return (
-    <Modal
-      visible={visible}
-      transparent
-      animationType="fade"
-      onRequestClose={onClose}
-    >
+    <Modal visible={visible} animationType="fade" onRequestClose={onClose}>
       <StatusBar hidden />
       <View style={styles.container}>
-        <TouchableOpacity
-          style={styles.content}
-          activeOpacity={1}
-          onPress={() =>
-            status.type === "video" && setShowControls(!showControls)
-          }
-        >
-          <View
-            style={[
-              styles.mediaContainer,
-              { backgroundColor: colors.background },
-            ]}
-          >
-            {status.type === "image" ? (
-              <Image
-                source={{ uri: status.uri }}
-                style={styles.media}
-                resizeMode="contain"
-              />
-            ) : (
-              <>
-                <Video
-                  source={{ uri: status.uri }}
-                  style={styles.media}
-                  resizeMode="contain"
-                  paused={videoPaused}
-                  repeat
-                  controls={false}
-                  onProgress={(data) => setCurrentTime(data.currentTime)}
-                  onLoad={(data) => setDuration(data.duration)}
-                />
+        <View style={[styles.mediaContainer, { backgroundColor: colors.background }]}>
+          {status.type === "image" ? (
+            <Image source={{ uri: status.uri }} style={styles.media} resizeMode="contain" />
+          ) : (
+            <View style={styles.placeholderVideo}>
+              <Text style={styles.placeholderText}>Video playback temporarily disabled</Text>
+            </View>
+          )}
+        </View>
 
-                {/* Custom Video Controls */}
-                {showControls && (
-                  <View style={styles.videoControls}>
-                    <TouchableOpacity
-                      style={[
-                        styles.playButton,
-                        { backgroundColor: colors.overlay },
-                      ]}
-                      onPress={() => setVideoPaused(!videoPaused)}
-                    >
-                      <Text style={styles.playButtonText}>
-                        {videoPaused ? "▶️" : "⏸️"}
-                      </Text>
-                    </TouchableOpacity>
+        <View style={[styles.metadata, { backgroundColor: colors.overlay }]}>
+          <Text style={styles.metadataText}>📏 {formatFileSize(status.size)}</Text>
+          <Text style={styles.metadataText}>📅 {formatDate(status.timestamp)}</Text>
+        </View>
 
-                    <View
-                      style={[
-                        styles.timeContainer,
-                        { backgroundColor: colors.overlay },
-                      ]}
-                    >
-                      <Text style={styles.timeText}>
-                        {formatTime(currentTime)} / {formatTime(duration)}
-                      </Text>
-                    </View>
-                  </View>
-                )}
-              </>
-            )}
-          </View>
-        </TouchableOpacity>
-
-        {/* Metadata Info */}
-        {showControls && (
-          <View style={[styles.metadata, { backgroundColor: colors.overlay }]}>
-            <Text style={styles.metadataText}>
-              📏 {formatFileSize(status.size)}
-            </Text>
-            <Text style={styles.metadataText}>
-              📅 {formatDate(status.timestamp)}
-            </Text>
-          </View>
-        )}
-
-        {/* Header */}
         <View style={styles.header}>
-          <TouchableOpacity
-            style={[styles.headerButton, { backgroundColor: colors.overlay }]}
-            onPress={onClose}
-          >
+          <TouchableOpacity style={[styles.headerButton, { backgroundColor: colors.overlay }]} onPress={onClose}>
             <Text style={styles.headerButtonText}>✕</Text>
           </TouchableOpacity>
         </View>
 
-        {/* Footer */}
         <View style={styles.footer}>
-          <TouchableOpacity
-            style={[styles.footerButton, { backgroundColor: colors.overlay }]}
-            onPress={handleShare}
-          >
+          <TouchableOpacity style={[styles.footerButton, { backgroundColor: colors.overlay }]} onPress={handleShare}>
             <Text style={styles.footerButtonText}>📤 Share</Text>
           </TouchableOpacity>
-
           {showDelete && onDelete ? (
-            <TouchableOpacity
-              style={[styles.footerButton, { backgroundColor: colors.error }]}
-              onPress={onDelete}
-            >
-              <Text
-                style={[styles.footerButtonText, styles.downloadButtonText]}
-              >
-                🗑️ Delete
-              </Text>
+            <TouchableOpacity style={[styles.footerButton, { backgroundColor: colors.error }]} onPress={onDelete}>
+              <Text style={[styles.footerButtonText, styles.downloadButtonText]}>🗑️ Delete</Text>
             </TouchableOpacity>
           ) : (
-            <TouchableOpacity
-              style={[
-                styles.footerButton,
-                styles.downloadButton,
-                { backgroundColor: colors.primary },
-              ]}
-              onPress={onDownload}
-            >
-              <Text
-                style={[styles.footerButtonText, styles.downloadButtonText]}
-              >
-                ⬇ Download
-              </Text>
+            <TouchableOpacity style={[styles.footerButton, styles.downloadButton, { backgroundColor: colors.primary }]} onPress={onDownload}>
+              <Text style={[styles.footerButtonText, styles.downloadButtonText]}>⬇ Download</Text>
             </TouchableOpacity>
           )}
         </View>
@@ -213,10 +108,7 @@ export const StatusPreview: React.FC<StatusPreviewProps> = ({
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#000000",
-  },
-  content: {
-    flex: 1,
+    backgroundColor: "#000",
   },
   mediaContainer: {
     flex: 1,
@@ -227,33 +119,16 @@ const styles = StyleSheet.create({
     width: width,
     height: height,
   },
-  videoControls: {
-    position: "absolute",
-    bottom: 100,
-    left: 0,
-    right: 0,
-    alignItems: "center",
-    gap: 16,
-  },
-  playButton: {
-    width: 60,
-    height: 60,
-    borderRadius: 30,
+  placeholderVideo: {
+    width: width,
+    height: height,
     justifyContent: "center",
     alignItems: "center",
+    backgroundColor: "#111",
   },
-  playButtonText: {
-    fontSize: 24,
-  },
-  timeContainer: {
-    paddingHorizontal: 16,
-    paddingVertical: 8,
-    borderRadius: 20,
-  },
-  timeText: {
-    color: "#FFFFFF",
-    fontSize: 14,
-    fontWeight: "600",
+  placeholderText: {
+    color: "#fff",
+    fontSize: 16,
   },
   metadata: {
     position: "absolute",
