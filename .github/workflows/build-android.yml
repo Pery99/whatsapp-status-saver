@@ -22,7 +22,7 @@ jobs:
           cache: "npm"
 
       - name: Install dependencies
-        run: npm ci
+        run: npm install --no-audit --no-fund
 
       - name: Setup Java
         uses: actions/setup-java@v4
@@ -67,6 +67,7 @@ jobs:
             fi;
           done
           ls -al app/build/outputs/apk/debug || true
+          find app/build/outputs -type f -maxdepth 3 -print || true
 
       - name: Build Release APK
         run: |
@@ -81,17 +82,22 @@ jobs:
             fi;
           done
           ls -al app/build/outputs/apk/release || true
+          find app/build/outputs -type f -maxdepth 3 -print || true
 
       - name: Upload Debug APK
         uses: actions/upload-artifact@v4
         with:
           name: app-debug
-          path: android/app/build/outputs/apk/debug/app-debug.apk
+          path: |
+            android/app/build/outputs/apk/debug/*.apk
+            android/app/build/outputs/**/debug/*.apk
           if-no-files-found: error
 
       - name: Upload Release APK
         uses: actions/upload-artifact@v4
         with:
           name: app-release
-          path: android/app/build/outputs/apk/release/app-release.apk
+          path: |
+            android/app/build/outputs/apk/release/*.apk
+            android/app/build/outputs/**/release/*.apk
           if-no-files-found: error
